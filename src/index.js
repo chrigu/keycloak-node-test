@@ -40,7 +40,10 @@ const server = new GraphQLServer({
   // schema,
   typeDefs: mainSchema,
   resolvers: resolvers,
-  context: { prisma },
+  context: (request) => {
+    console.log(request.request.kauth)
+    return request.prisma
+  },
 })
 
 const options = { 
@@ -49,10 +52,7 @@ const options = {
   endpoint: '/graphql',
 }
 
-const keycloakMiddleware = keycloak.middleware();
-const usedKeycloakMiddleware = [keycloakMiddleware[0], keycloakMiddleware[3]]
-
-server.express.use(keycloakMiddleware);
+server.express.use(keycloak.middleware());
 // server.use(usedKeycloakMiddleware);
 server.express.post('/graphql', keycloak.protect());
 

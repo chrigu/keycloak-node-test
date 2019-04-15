@@ -1,11 +1,18 @@
 
 
 # type Mutation {
-#   login(email: String!, password: String!): AuthPayload!
+#   register(): AuthPayload!
 # }
 
 type Query {
-  me: String!
+  me: MeInfo!
+}
+
+type MeInfo {
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
 }
 
 # type AuthPayload {
