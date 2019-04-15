@@ -15,7 +15,7 @@ let kcConfig = {
   bearerOnly: true,
   serverUrl: 'http://localhost:8080/auth',
   realm: 'sso',
-  realmPublicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApkDJ7PJtDLZUXcWEq/wLGylEVpkWxEx7cvrJkU+l7FklPp8RDN82TSW1dOyK6qHXx90386gAZ83dRgSEhZSWG4kFRgY2SYdrK85bieJfi3nKrZAHKRUrrqiQRfXMFPNoUfxUXtIdBy52oSumNYZIwiMIHIfJhjU0aUB6Tq1Rzfl1k7tRKiXgHbnzxwANcowMsrvgSCONBxeUFpgovIysffua4WgiXhfi2haj/ah64kQKwmRB7QsHWwLQJwur76rwYInHqGXKyYnrXP0YUONOPdVI1CatFctmwK+KsnrpCbipTol4n7zfk7gkoSw4JtkzuMc+Y8aYsJoFfoB1UzA6DQIDAQAB'
+  realmPublicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk5XDSRUHHu+R5blR0BEyL2mVpHr4nevywjvUT3Dj0t7X0/fygc/1THXleuOJ7L3D9PA6tBcecnYj/yE//44yDB95xra7SAILIui6p+IL7sYITpNnhpco7QTE3mTrAIWVDBO45cLG4VXgZjnxtIk759MuPwJhQ2uJORCe7+YAUgiRE8upD4hErXrs3SFIXvueL+iiEFKL+oMBlcWXhSHwhJ/CTmiGd2PrbvVd6NEelPetdAPy8ceHyg4hNd08MEanwvYSJDSo0TmyfAgSlsbHaZHEWd8XIxqre9ac+2rTkxq4YoAPf/xkx1FEkQ77VjzRxyf4KGN/yVpDR+NaUfryywIDAQAB'
 };
 
 var memoryStore = new session.MemoryStore();
@@ -52,7 +52,8 @@ const options = {
 const keycloakMiddleware = keycloak.middleware();
 const usedKeycloakMiddleware = [keycloakMiddleware[0], keycloakMiddleware[3]]
 
-server.use(usedKeycloakMiddleware);
+server.express.use(keycloakMiddleware);
+// server.use(usedKeycloakMiddleware);
 server.express.post('/graphql', keycloak.protect());
 
 server.start(options, ({ port }) =>
